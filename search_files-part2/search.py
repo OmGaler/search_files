@@ -15,8 +15,8 @@ def search(n):
         if state.is_target(s):
             f[1] = len(s[-1]) #number of moves made 
             moves += f[1]
-            pushed += f[3]
             popped += f[4]
+            pushed += f[3]
             return [s, f[1]]
         ns=state.get_next(s)
         for i in ns:
@@ -28,34 +28,51 @@ for i in range(100):
     answer = search(size)
     # print(answer)
 print("%sx%s grid: " % (size, size)) 
-print("Average moves: " + str(moves/100)) 
-print("Average number pushed: " + str(pushed/100))
-print("Average number popped: " + str(popped/100))
-
+print("Average solution path cost: " + str(moves/100.0)) 
+print("Average number pushed: " + str(pushed/100.0))
+print("Average number popped: " + str(popped/100.0))
 
 """
 =============================
 OUTPUT
 =============================
-n=2
 
-2x2 grid: 
-Average moves: 1
-Average number pushed: 2
-Average number popped: 2
 
-n=3
+===========
+Unweighted A*
+===========
 
-3x3 grid: 
-Average moves: 5
-Average number pushed: 18
-Average number popped: 10
-
-n=4
-
+search(4), using heuristic hdistance1 (number of tiles out of place)
 4x4 grid: 
-Average moves: 15
-Average number pushed: 584
-Average number popped: 279
+Average solution path cost: 13.6
+Average number pushed: 25702.2
+Average number popped: 12174.8
+
+search(4), using heuristic hdistance2 (manhattan distance)
+4x4 grid: 
+Average solution path cost: 15.75
+Average number pushed: 977.96
+Average number popped: 465.93
+
+===========
+Weighted A*
+===========
+
+search(4), using heuristic 2hdistance1 (number of tiles out of place)
+4x4 grid: 
+Average solution path cost: 18.1
+Average number pushed: 10385.4
+Average number popped: 4775.2
+
+search(4), using heuristic 2hdistance2 (manhattan distance)
+4x4 grid: 
+Average solution path cost: 16.89
+Average number pushed: 601.78
+Average number popped: 282.59
+
+Observations: running the weighted A* search generally gave a greater average solution 
+cost (optimality/path length) compared to unweighted A* but significantly reduces 
+the runtime and number of states checked
 =============================
+
 """
